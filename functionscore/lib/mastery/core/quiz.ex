@@ -41,9 +41,9 @@ defmodule Mastery.Core.Quiz do
   end
 
   def answer_question(quiz, %Response{correct: false} = response) do
-      quiz
-      |> reset_record
-      |> save_response(response)
+    quiz
+    |> reset_record
+    |> save_response(response)
   end
 
   def save_response(quiz, response) do
@@ -84,10 +84,10 @@ defmodule Mastery.Core.Quiz do
 
   defp select_a_random_question(quiz) do
     quiz.templates
-    |> Enum.random
+    |> Enum.random()
     |> elem(1)
-    |> Enum.random
-    |> Question.new
+    |> Enum.random()
+    |> Question.new()
   end
 
   defp move_template(quiz, field) do
@@ -100,17 +100,18 @@ defmodule Mastery.Core.Quiz do
 
   defp remove_template_from_category(quiz) do
     template = template(quiz)
+
     new_category_templates =
       quiz.templates
       |> Map.fetch!(template.category)
       |> List.delete(template)
 
     new_templates =
-    if new_category_templates == [] do
-      Map.delete(quiz.templates, template.category)
-    else
-      Map.put(quiz.templates, template.category, new_category_templates)
-    end
+      if new_category_templates == [] do
+        Map.delete(quiz.templates, template.category)
+      else
+        Map.put(quiz.templates, template.category, new_category_templates)
+      end
 
     Map.put(quiz, :templates, new_templates)
   end
@@ -123,10 +124,12 @@ defmodule Mastery.Core.Quiz do
     Map.put(quiz, field, [template | list])
   end
 
-  defp reset_template_cycle(%{templates: templates, used: used} = quiz) when map_size(templates) == 0 do
+  defp reset_template_cycle(%{templates: templates, used: used} = quiz)
+       when map_size(templates) == 0 do
     %__MODULE__{
-      quiz | templates: Enum.group_by(used, fn template -> template.category end),
-      used: []
+      quiz
+      | templates: Enum.group_by(used, fn template -> template.category end),
+        used: []
     }
   end
 
