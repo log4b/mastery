@@ -31,7 +31,7 @@ defmodule ResponseTest do
     end
 
     test "a timestamp is added at build time", %{right: response} do
-      assert %DateTime{ } = response.timestamp
+      assert %DateTime{} = response.timestamp
       assert response.timestamp < DateTime.utc_now()
     end
   end
