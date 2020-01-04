@@ -32,7 +32,7 @@ defmodule Mastery.Boundary.TemplateValidator do
 
     []
     |> require(fields, :name, &validate_name/1)
-    |> require(fields, :category, &validate_category/1)
+    |> require(fields, :category, &validate_name/1)
     |> require(fields, :instructions, &validate_instructions/1)
     |> require(fields, :raw, &validate_raw/1)
     |> require(fields, :generators, &validate_generators/1)
